@@ -1,0 +1,35 @@
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="./APlayer.min.js"></script>
+    <script type="text/javascript" src="./list.js"></script>
+    <style>
+    [style*="z-index:9999"]
+	{
+		display:none;
+	}
+    </style>
+    <title></title>
+  </head>
+
+  <body>
+    <div id="player1" class="aplayer" style="width:100%;margin:0;"></div>
+    <script type="text/javascript">
+      var configure = {
+        element: document.getElementById('player1'),
+        narrow: false,
+        autoplay: true,
+        mutex: true,
+        theme: '#e6d0b2', // Optional, theme color, default: #b7daff
+        mode: 'random', //`random` `single` `order`(no loop), default: `circulation`
+        preload: 'metadata', //'none' 'metadata' 'auto', default: 'auto'
+        listmaxheight: '300px', // Optional, max height of play list
+        music: music
+      }
+      var ap = new APlayer(configure);
+
+    </script>
+  </body>
+
+</html>
