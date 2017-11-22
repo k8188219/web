@@ -26,7 +26,7 @@
   }
   </style>
   <div align="center">
-    <iframe src='playlist/AP.html' style='overflow:hidden;border: 0;margin:0;background: white;'></iframe>
+    <iframe src='AP.html' style='overflow:hidden;border: 0;margin:0;background: white;'></iframe>
   </div>
 </body>
 
