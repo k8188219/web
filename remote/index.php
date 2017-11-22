@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 ini_set('max_execution_time', 1200);#&#35373;&#32622;php&#22519;&#34892;&#26368;&#22823;&#26178;&#38291;(&#31186;)
 
 #&#20597;&#28204;&#36664;&#20837;
@@ -36,10 +36,14 @@ $size = (int)ltrim($lines_array[$count],"Content-Length: ");*/
 
 #&#21462;&#24471;&#27284;&#26696;&#22823;&#23567;&#26041;&#27861;
 $size = get_headers($url,1)["Content-Length"];
+$head = get_headers($url,0);
+foreach ($head as $v) {
+    header($v);
+}
 
 #&#23531;&#20837;Header
-header("Accept-Ranges: bytes");
-header("Content-Length: $size");
+//header("Accept-Ranges: bytes");
+//header("Content-Length: $size");
 
 
 $ch = curl_init($url);#&#24314;&#31435;curl&#36899;&#32218;
