@@ -7,7 +7,7 @@ if(!$_GET["f"]){
     <script>
 	function myprint()
 	{
-		document.getElementsByTagName('p')[0].innerHTML ='<a href="?f='+document.getElementsByTagName('input')[0].value+'">link</a>'+ 
+		document.getElementsByTagName('p')[0].innerHTML ='<a href="?f='+document.getElementsByTagName('input')[0].value+'">link</a>' 
 	}
 	</script>
     <input></input>
