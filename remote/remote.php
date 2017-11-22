@@ -3,10 +3,17 @@ ini_set('max_execution_time', 1200);#&#35373;&#32622;php&#22519;&#34892;&#26368;
 
 #&#20597;&#28204;&#36664;&#20837;
 if(!$_GET["f"]){
-    echo "<script>function myprint(){document.getElementsByTagName('p')[0].innerHTML ='http://pigchat.pe.hu/index.php?f='+ document.getElementsByTagName('input')[0].value}</script>";
-    echo "<input></input> ";
-    echo "<button onclick='myprint()'>button</button>";
-    echo "<p></p>";
+?>
+    <script>
+	function myprint()
+	{
+		document.getElementsByTagName('p')[0].innerHTML ='<a href="?f='+document.getElementsByTagName('input')[0].value+'">link</a>'+ 
+	}
+	</script>
+    <input></input>
+    <button onclick='myprint()'>button</button>
+    <p></p>
+<?php
     exit();
 }else{
     $url = $_GET["f"];
