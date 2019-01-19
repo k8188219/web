@@ -1,5 +1,5 @@
 <?php
-header("Location: intent://scan/#Intent".
+header("Location: intent://".$_GET["intent"]."/#Intent".
 ";scheme=".$_GET["scheme"].
 ";package=".$_GET["package"].
 ";action=".$_GET["action"].
