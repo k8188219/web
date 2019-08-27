@@ -63,7 +63,7 @@ if($_GET["c"]){
 curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
 }
 $file = curl_exec($ch);#&#22519;&#34892;curl
-$position = (int)curl_getinfo($ch)[size_download];#&#21462;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
+$position = (int)curl_getinfo($ch)['size_download'];#&#21462;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
 curl_close($ch);#&#38364;&#38281;&#36899;&#32218;
 
 #&#26159;&#21542;&#23436;&#25104;&#19979;&#36617;
@@ -86,7 +86,7 @@ curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
     curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,0);#curl&#36899;&#32218;&#19981;&#20013;&#26039;
     curl_setopt($ch,CURLOPT_DNS_CACHE_TIMEOUT,3600);#DNS&#26283;&#23384;1&#23567;&#26178;
     $file = curl_exec($ch);#&#22519;&#34892;
-    $position += (int)curl_getinfo($ch)[size_download];#&#21462;&#32317;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
+    $position += (int)curl_getinfo($ch)['size_download'];#&#21462;&#32317;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
     curl_close($ch);#&#38364;&#38281;&#36899;&#32218;
     
     #&#30906;&#35469;&#26159;&#21542;&#23436;&#27284;
