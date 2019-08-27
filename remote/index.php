@@ -35,25 +35,20 @@ for($i=0;$i<count($lines_array)-1;$i++){
 $size = (int)ltrim($lines_array[$count],"Content-Length: ");*/
 
 #&#21462;&#24471;&#27284;&#26696;&#22823;&#23567;&#26041;&#27861;
+
 if($_GET["c"]){
 $opts = array(
   'http'=>array(
-    'method'=>"HEAD",
+    'method'=>"GET",
     'header'=>"Cookie: ".$_GET["c"]
   )
 );
-$context = stream_context_create($opts);
-$size = get_headers($url,1,$context)["Content-Length"];
-$head = get_headers($url,0,$context);
-foreach ($head as $v) {
-    header($v);
+stream_context_set_default($opts);
 }
-} else {
 $size = get_headers($url,1)["Content-Length"];
 $head = get_headers($url,0);
 foreach ($head as $v) {
     header($v);
-}
 }
 
 
