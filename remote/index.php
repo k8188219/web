@@ -48,7 +48,7 @@ stream_context_set_default($opts);
 $size = get_headers($url,1)["Content-Length"];
 $head = get_headers($url,0);
 foreach ($head as $v) {
-    header($v);
+    header($v,false);
 }
 
 
