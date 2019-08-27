@@ -42,20 +42,21 @@ $opts = array(
     'header'=>"Cookie: ".$_GET["c"]
   )
 );
-} else {
-$opts = array(
-  'http'=>array(
-    'method'=>"GET"
-  )
-);
-}
-
 $context = stream_context_create($opts);
 $size = get_headers($url,1,$context)["Content-Length"];
 $head = get_headers($url,0,$context);
 foreach ($head as $v) {
     header($v);
 }
+} else {
+$size = get_headers($url,1)["Content-Length"];
+$head = get_headers($url,0);
+foreach ($head as $v) {
+    header($v);
+}
+}
+
+
 
 #&#23531;&#20837;Header
 //header("Accept-Ranges: bytes");
