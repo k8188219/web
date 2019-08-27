@@ -50,8 +50,7 @@ $head = get_headers($url,0);
 foreach ($head as $v) {
     header($v,false);
 }
-
-
+error_log($head);
 
 #&#23531;&#20837;Header
 //header("Accept-Ranges: bytes");
