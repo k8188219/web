@@ -1,5 +1,5 @@
 <?php
-ini_set('max_execution_time', 1200);#&#35373;&#32622;php&#22519;&#34892;&#26368;&#22823;&#26178;&#38291;(&#31186;)
+set_time_limit(0);
 
 #&#20597;&#28204;&#36664;&#20837;
 if(!$_GET["f"]){
@@ -36,14 +36,14 @@ $size = (int)ltrim($lines_array[$count],"Content-Length: ");*/
 
 #&#21462;&#24471;&#27284;&#26696;&#22823;&#23567;&#26041;&#27861;
 
-if($_GET["c"]){
-$opts = array(
-  'http'=>array(
-    'method'=>"GET",
-    'header'=>"Cookie: ".$_GET["c"]
-  )
-);
-stream_context_set_default($opts);
+if ($_GET["c"]) {
+    $opts = array(
+        'http'=>array(
+            'method'=>"GET",
+            'header'=>"Cookie: ".$_GET["c"]
+        )
+    );
+    stream_context_set_default($opts);
 }
 $size = get_headers($url,1)["Content-Length"];
 $head = get_headers($url,0);
@@ -55,20 +55,15 @@ var_dump($head);
 $err = ob_get_clean();
 error_log($err);
 
-#&#23531;&#20837;Header
-//header("Accept-Ranges: bytes");
-//header("Content-Length: $size");
-
-
-$ch = curl_init($url);#&#24314;&#31435;curl&#36899;&#32218;
+$ch = curl_init($url);
 if($_GET["c"]){
-curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
+    curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
 }
-$file = curl_exec($ch);#&#22519;&#34892;curl
-$position = (int)curl_getinfo($ch)['size_download'];#&#21462;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
-curl_close($ch);#&#38364;&#38281;&#36899;&#32218;
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+$file = curl_exec($ch);
+$position = (int)curl_getinfo($ch)['size_download'];
+curl_close($ch);
 
-#&#26159;&#21542;&#23436;&#25104;&#19979;&#36617;
 if($size>$position){
     checkFinish($url,$position,$size,$time);
 }
@@ -80,22 +75,21 @@ function checkFinish($url,$position,$size,$time){
     fwrite($test,$time);
     fclose($test);
     
-    $ch = curl_init($url);#&#24314;&#31435;curl&#36899;&#32218;
-    curl_setopt($ch,CURLOPT_RESUME_FROM,$position);#&#26039;&#40670;&#32396;&#20659;
-if($_GET["c"]){
-curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
-}
-    curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,0);#curl&#36899;&#32218;&#19981;&#20013;&#26039;
-    curl_setopt($ch,CURLOPT_DNS_CACHE_TIMEOUT,3600);#DNS&#26283;&#23384;1&#23567;&#26178;
-    $file = curl_exec($ch);#&#22519;&#34892;
-    $position += (int)curl_getinfo($ch)['size_download'];#&#21462;&#32317;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
-    curl_close($ch);#&#38364;&#38281;&#36899;&#32218;
+    $ch = curl_init($url);
+    if($_GET["c"]){
+        curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
+    }
+    curl_setopt($ch,CURLOPT_RESUME_FROM,$position);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,0);
+    curl_setopt($ch,CURLOPT_DNS_CACHE_TIMEOUT,3600);
+    $file = curl_exec($ch);
+    $position += (int)curl_getinfo($ch)['size_download'];
+    curl_close($ch);
     
-    #&#30906;&#35469;&#26159;&#21542;&#23436;&#27284;
     if($size>$position){
         checkFinish($url,$position,$size,$time);
     }else{
-        #log&#32080;&#26463;
         $test = fopen('log','a+');
         fwrite($test,'.end');
         fclose($test);
