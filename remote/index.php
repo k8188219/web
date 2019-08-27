@@ -47,9 +47,8 @@ foreach ($head as $v) {
 
 
 $ch = curl_init($url);#&#24314;&#31435;curl&#36899;&#32218;
-if ($_GET["c"]) {
-    curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
-}
+$cookiiiiie = 'NID=188=soOIekGERhT-uPnSvVXWwIbB4BWU9jbr7M8tBjc0eTf_4wFNtXgdpWhZcTx_fKRqxFfZIKaWQuQlMbxxG2oWr6LGMS6DRmbMbIUvT2-VtikkDzvL5vRtHxvctKZNV1ZA_NsUDT44fmblahd4V35qF24WaoinxTHK2908RsR1W7w;B=0';
+curl_setopt($ch, CURLOPT_COOKIE, $cookiiiiie);
 $file = curl_exec($ch);#&#22519;&#34892;curl
 $position = (int)curl_getinfo($ch)[size_download];#&#21462;&#19979;&#36617;&#27284;&#26696;&#22823;&#23567;
 curl_close($ch);#&#38364;&#38281;&#36899;&#32218;
@@ -68,9 +67,8 @@ function checkFinish($url,$position,$size,$time){
     
     $ch = curl_init($url);#&#24314;&#31435;curl&#36899;&#32218;
     curl_setopt($ch,CURLOPT_RESUME_FROM,$position);#&#26039;&#40670;&#32396;&#20659;
-    if ($_GET["c"]) {
-    	curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
-    }
+$cookiiiiie = 'NID=188=soOIekGERhT-uPnSvVXWwIbB4BWU9jbr7M8tBjc0eTf_4wFNtXgdpWhZcTx_fKRqxFfZIKaWQuQlMbxxG2oWr6LGMS6DRmbMbIUvT2-VtikkDzvL5vRtHxvctKZNV1ZA_NsUDT44fmblahd4V35qF24WaoinxTHK2908RsR1W7w;B=0';
+curl_setopt($ch, CURLOPT_COOKIE, $cookiiiiie);
     curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,0);#curl&#36899;&#32218;&#19981;&#20013;&#26039;
     curl_setopt($ch,CURLOPT_DNS_CACHE_TIMEOUT,3600);#DNS&#26283;&#23384;1&#23567;&#26178;
     $file = curl_exec($ch);#&#22519;&#34892;
