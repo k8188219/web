@@ -38,7 +38,7 @@ $size = (int)ltrim($lines_array[$count],"Content-Length: ");*/
 if($_GET["c"]){
 $opts = array(
   'http'=>array(
-    'method'=>"GET",
+    'method'=>"HEAD",
     'header'=>"Cookie: ".$_GET["c"]
   )
 );
