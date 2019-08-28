@@ -38,7 +38,7 @@ foreach ($head as $v) {
     header($v,false);
 }
 ob_start();
-var_dump($head);
+var_dump($size);
 var_dump($head);
 $err = ob_get_clean();
 error_log($err);
