@@ -52,6 +52,7 @@ foreach ($head as $v) {
 }
 ob_start();
 var_dump($head);
+var_dump($head);
 $err = ob_get_clean();
 error_log($err);
 
@@ -65,6 +66,17 @@ $position = (int)curl_getinfo($ch)['size_download'];
 curl_close($ch);
 
 if($size>$position){
+ob_start();
+var_dump(
+array(
+    'url'=>$url,
+    'position'=>$position,
+    'size'=>$size,
+    'time'=>$time
+)
+);
+$err = ob_get_clean();
+error_log($err);
     checkFinish($url,$position,$size,$time);
 }
 
@@ -87,7 +99,18 @@ function checkFinish($url,$position,$size,$time){
     $position += (int)curl_getinfo($ch)['size_download'];
     curl_close($ch);
     
-    if($size>$position){
+    if($size>$position && $time < 1000){
+ob_start();
+var_dump(
+array(
+    'url'=>$url,
+    'position'=>$position,
+    'size'=>$size,
+    'time'=>$time
+)
+);
+$err = ob_get_clean();
+error_log($err);
         checkFinish($url,$position,$size,$time);
     }else{
         $test = fopen('log','a+');
