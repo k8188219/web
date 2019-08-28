@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
 
-#&#20597;&#28204;&#36664;&#20837;
+// detect input
 if(!$_GET["f"]){
 ?>
     <script>
@@ -18,24 +18,11 @@ if(!$_GET["f"]){
 }else{
     $url = $_GET["f"];
 }
-$size = 0;#&#25972;&#20491;&#27284;&#26696;&#22823;&#23567;
-$record = 0;#&#26368;&#21021;&#21462;&#24471;&#30070;&#26696;&#22823;&#23567;&#26041;&#27861;&#30340;&#21443;&#25976;
-$count = 0;#&#26368;&#21021;&#21462;&#24471;&#30070;&#26696;&#22823;&#23567;&#26041;&#27861;&#30340;&#21443;&#25976;
-$time = 0;#&#37325;&#26032;&#36899;&#25509;&#30340;&#27425;&#25976;
+$size = 0; // download file size
+$time = 0; // reconnection times
 
-#&#26368;&#21021;&#21462;&#24471;&#27284;&#26696;&#22823;&#23567;&#26041;&#27861;
-/*$lines_array = get_headers($url);
-for($i=0;$i<count($lines_array)-1;$i++){
-    similar_text($lines_array[$i],"Content-Length:",$percent);
-    if($percent>$record){
-        $record = $percent;
-        $count = $i;
-    }
-}
-$size = (int)ltrim($lines_array[$count],"Content-Length: ");*/
 
-#&#21462;&#24471;&#27284;&#26696;&#22823;&#23567;&#26041;&#27861;
-
+// get file size add header
 if ($_GET["c"]) {
     $opts = array(
         'http'=>array(
@@ -81,7 +68,7 @@ error_log($err);
 }
 
 function checkFinish($url,$position,$size,$time){
-    #log&#27425;&#25976;
+    // log reconnection times
     $time++;
     $test = fopen('log','w+');
     fwrite($test,$time);
