@@ -37,6 +37,9 @@ $head = get_headers($url,0);
 foreach ($head as $v) {
     header($v,false);
 }
+if ($_GET["s"]) {
+    header("Content-Length: ".$_GET["s"],true);
+}
 ob_start();
 var_dump($size);
 var_dump($head);
