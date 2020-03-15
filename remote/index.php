@@ -13,64 +13,44 @@ if (!$_GET["f"]) {
     <button onclick='myprint()'>button</button>
     <p></p>
 <?php
-    exit();
-} else {
-    $url = $_GET["f"];
+    exit;
 }
+$url = $_GET["f"];
 $size = 0; // download file size
 $time = 0; // reconnection times
 
 
-// get file size add header
-if ($_GET["c"]) {
-    $opts = array(
-        'http' => array(
-            'method' => "GET",
-            'header' => "Cookie: " . $_GET["c"]
-        )
-    );
-    stream_context_set_default($opts);
-}
-$size = get_headers($url, 1)["Content-Length"];
-$head = get_headers($url, 0);
-foreach ($head as $v) {
-    header($v, false);
-}
 if ($_GET["s"]) {
     header("Content-Length: " . $_GET["s"], true);
 }
-ob_start();
-var_dump($size);
-var_dump($head);
-$err = ob_get_clean();
-error_log($err);
 
 $ch = curl_init($url);
 if ($_GET["c"]) {
     curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
 }
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-$file = curl_exec($ch);
+curl_setopt($ch, CURLOPT_HEADERFUNCTION, function ($curl, $header_line) use (&$size) {
+    $len = strlen($header_line);
+    $header_line_arr = explode(':', $header_line, 2);
+    if (preg_match("/Content-Length/i", $header_line_arr[0])) {
+        $size = (int) $header_line_arr[1];
+    }
+    if (!preg_match("/Location/i", $header_line_arr[0])) {
+        header($header_line, false);
+    }
+    return $len;
+});
+curl_exec($ch);
 $position = (int) curl_getinfo($ch)['size_download'];
 curl_close($ch);
 
-if ($size > $position) {
-    ob_start();
-    var_dump(
-        array(
-            'url' => $url,
-            'position' => $position,
-            'size' => $size,
-            'time' => $time
-        )
-    );
-    $err = ob_get_clean();
-    error_log($err);
-    checkFinish($url, $position, $size, $time);
-}
+checkFinish($url, $position, $size, $time);
 
 function checkFinish($url, $position, $size, $time)
 {
+    if ($size <= $position) {
+        exit;
+    }
     // log reconnection times
     $time++;
     $test = fopen('log', 'w+');
@@ -83,24 +63,11 @@ function checkFinish($url, $position, $size, $time)
     }
     curl_setopt($ch, CURLOPT_RESUME_FROM, $position);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-    curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 3600);
-    $file = curl_exec($ch);
+    curl_exec($ch);
     $position += (int) curl_getinfo($ch)['size_download'];
     curl_close($ch);
 
-    if ($size > $position && $time < 1000) {
-        ob_start();
-        var_dump(
-            array(
-                'url' => $url,
-                'position' => $position,
-                'size' => $size,
-                'time' => $time
-            )
-        );
-        $err = ob_get_clean();
-        error_log($err);
+    if ($time < 1000) {
         checkFinish($url, $position, $size, $time);
     } else {
         $test = fopen('log', 'a+');
