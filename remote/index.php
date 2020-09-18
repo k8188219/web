@@ -28,6 +28,8 @@ $ch = curl_init($url);
 if ($_GET["c"]) {
     curl_setopt($ch, CURLOPT_COOKIE, $_GET["c"]);
 }
+
+if ($_GET["h"])curl_setopt($ch, CURLOPT_HTTPHEADER, $_GET["h"]);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_HEADERFUNCTION, function ($curl, $header_line) use (&$size) {
     $len = strlen($header_line);
