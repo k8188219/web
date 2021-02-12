@@ -37,7 +37,7 @@ curl_setopt($ch, CURLOPT_HEADERFUNCTION, function ($curl, $header_line) use (&$s
     if (preg_match("/Content-Length/i", $header_line_arr[0])) {
         $size = (int) $header_line_arr[1];
     }
-    if (!preg_match("/Location/i", $header_line_arr[0])) {
+    if (!preg_match("/Location|content-encoding|/i", $header_line_arr[0])) {
         header($header_line, false);
     }
     return $len;
