@@ -22,6 +22,7 @@ $time = 0; // reconnection times
 
 if ($_GET["s"]) {
     header("Content-Length: " . $_GET["s"], true);
+    $size = (int) $_GET["s"];
 }
 
 $ch = curl_init($url);
